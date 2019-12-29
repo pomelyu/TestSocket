@@ -7,24 +7,23 @@ class Client():
         self.uri = uri
         self.con = None
         self.loop = asyncio.get_event_loop()
-        # asyncio.ensure_future(self.connect_object(), loop=self.loop)
-        # asyncio.ensure_future(self.handle_message(), loop=self.loop)
-        # self.loop.run_forever()
-        self.loop.run_until_complete(self.connect_object())
+        asyncio.ensure_future(self.connect_object(), loop=self.loop)
+        asyncio.ensure_future(self.handle_message(), loop=self.loop)
+        self.loop.run_forever()
+        # self.loop.run_until_complete(self.connect_object())
 
     async def connect_object(self):
-        async with websockets.connect(self.uri) as socket:
-            # await asyncio.sleep(20)
-            while True:
-                try:
-                    message = await socket.recv()
-                    print(f"received {message}")
-                except Exception as e:
-                    print(type(e), e)
+        # async with websockets.connect(self.uri) as socket:
+        #     while True:
+        #         try:
+        #             message = await socket.recv()
+        #             print(f"received {message}")
+        #         except Exception as e:
+        #             print(type(e), e)
                     
-                await asyncio.sleep(1)
+        #         await asyncio.sleep(1)
 
-        # self.con = await websockets.connect(self.uri)
+        self.con = await websockets.connect(self.uri)
 
     async def handle_message(self):
         while not self.con:
